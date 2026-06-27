@@ -15,7 +15,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.get("/me", isAuthenticated,  getProfile);
 router.put("/addresses", isAuthenticated, updateAddresses);
-router.delete("/addresses/:addressId", auth, deleteAddress);
+router.delete("/addresses/:addressId", isAuthenticated, deleteAddress);
 router.get("/logout", logout);
 
 module.exports = router;
