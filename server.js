@@ -39,6 +39,7 @@ const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const subCategoryRoutes = require("./routes/subCategoryRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 
 app.use("/api/auth", authRoutes);
@@ -47,6 +48,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/subcategory", subCategoryRoutes);
+app.use("/api/payment", paymentRoutes);
 
 
 // production setup

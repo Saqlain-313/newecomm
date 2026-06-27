@@ -132,3 +132,93 @@ exports.logout = (req, res) => {
         message: "Logged out successfully",
     });
 };
+
+exports.updateAddresses = async (req, res) => {
+  try {
+    const adminId = req.user.id;
+    const { addresses } = req.body;
+
+    if (!Array.isArray(addresses)) {
+      return res.status(400).json({
+        success: false,
+        message: "Addresses must be an array",
+      });
+    }
+
+    // Only one default address
+    const defaultAddresses = addresses.filter(
+      (address) => address.isDefault === true
+    );
+
+    if (defaultAddresses.length > 1) {
+      return res.status(400).json({
+        success: false,
+        message: "Only one address can be default.",
+      });
+    }
+
+    const admin = await Admin.findByIdAndUpdate(
+      adminId,
+      { addresses },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Addresses updated successfully.",
+      data: admin,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.deleteAddress = async (req, res) => {
+  try {
+    const adminId = req.user.id;
+    const { addressId } = req.params;
+
+    const admin = await Admin.findById(adminId);
+
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found",
+      });
+    }
+
+    const address = admin.addresses.id(addressId);
+
+    if (!address) {
+      return res.status(404).json({
+        success: false,
+        message: "Address not found",
+      });
+    }
+
+    address.deleteOne();
+
+    await admin.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Address deleted successfully.",
+      data: admin.addresses,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
