@@ -141,12 +141,12 @@ const cartSlice = createSlice({
                 state.loading = false;
                 state.error = null;
 
-                const cartData =
-                    action.payload?.cart ||
-                    action.payload?.data?.cart ||
-                    action.payload;
+                const cartItems =
+                    action.payload?.cart?.items ||
+                    action.payload?.data?.cart?.items ||
+                    [];
 
-                state.cartItems = Array.isArray(cartData) ? cartData : [];
+                state.cartItems = cartItems;
             })
 
             .addCase(addToCart.rejected, (state, action) => {
@@ -162,10 +162,12 @@ const cartSlice = createSlice({
             })
             .addCase(getCart.fulfilled, (state, action) => {
                 state.loading = false;
+                const cartItems =
+                    action.payload?.cart?.items ||
+                    action.payload?.items ||
+                    [];
 
-                const cartData = action.payload?.cart || action.payload;
-
-                state.cartItems = Array.isArray(cartData) ? cartData : [];
+                state.cartItems = cartItems;
             })
 
             .addCase(getCart.rejected, (state, action) => {

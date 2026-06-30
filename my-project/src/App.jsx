@@ -79,7 +79,7 @@ function App() {
         <Route path='/allproduct' element={<AllProduct />} />
         <Route path='/products/subcategory/:id' element={<SubCategoryProduct />} />
         <Route path='/checkout' element={<Checkout />} />
-        <Route path='/ordersuccess' element={<OrderSuccess />} />
+        <Route path='/ordersuccess/:id' element={<OrderSuccess />} />
 
         <Route
           path="/profilelayout"

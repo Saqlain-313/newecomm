@@ -816,51 +816,6 @@ const SubCategoryProduct = () => {
         )}
       </div>
 
-      {/* Custom Animations */}
-      <style jsx>{`
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(100px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes progress {
-          from {
-            width: 100%;
-          }
-          to {
-            width: 0%;
-          }
-        }
-        
-        .animate-slideDown {
-          animation: slideDown 0.3s ease-out;
-        }
-        
-        .animate-slideInRight {
-          animation: slideInRight 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        
-        .animate-progress {
-          animation: progress 3s linear forwards;
-        }
-      `}</style>
     </div>
   );
 };

@@ -5,6 +5,9 @@ import categoryReducer from './categorySlice';
 import productReducer from './productSlice';
 import authReducer from './authSlice';
 import subCategoryReducer from './subCategorySlice'
+import addressReducer from './addressSlice'
+import paymentReducer from './paymentSlice'
+
 
 
 // Load saved cart
@@ -30,6 +33,9 @@ export const store = configureStore({
         product: productReducer,
         auth: authReducer,
         subCategory: subCategoryReducer,
+        address: addressReducer,
+        payment: paymentReducer
+        
     },
     preloadedState: {
         cart: loadState()
