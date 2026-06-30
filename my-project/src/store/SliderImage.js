@@ -17,7 +17,7 @@ import image16 from '../assets/images/slide16.jpg'
 import image17 from '../assets/images/slide17.jpg'
 import image18 from '../assets/images/slide18.jpg'
 import image19 from '../assets/images/slide19.jpg'
-import image20 from '../assets/images/slide20.jpg'
+// import image20 from '../assets/images/slide20.jpg'
 
 
 export const SliderImage = [
@@ -154,12 +154,12 @@ export const SliderImage = [
         price:"$94.00",
         comment:"MORE SIZE AVAILABLE"
     },
-    {
-        id:20,
-        Image:image20,
-        description:"White Blue Stripe Bow Mini Dress",
-        price:"$64.00",
-        comment:"MORE SIZE AVAILABLE"
-    },
+    // {
+    //     id:20,
+    //     Image:image20,
+    //     description:"White Blue Stripe Bow Mini Dress",
+    //     price:"$64.00",
+    //     comment:"MORE SIZE AVAILABLE"
+    // },
 
 ]

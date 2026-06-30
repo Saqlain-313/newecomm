@@ -5,27 +5,11 @@ import Navbar from './component/Navbar'
 import Footer from './component/Footer'
 import Login from './Page/Login'
 import About from './Page/About'
-import NewShoes from './Page/NewShoes'
-import { KintWear } from './Page/KintWear'
 import Carrer from './Page/Carrer'
 import PrivacyPolicy from './Page/PrivacyPolicy'
 import ProductDetails from './Page/ProductDetails'
 import Cart from './Page/Cart'
 import Wishlist from './Page/WishList'
-import Jumpers from './Page/Jumpers'
-import Cardigans from './Page/Cardigans'
-import KinittedDress from './Page/KinittedDress'
-import Skirt from './Page/Skirt'
-import KinittedShorts from './Page/KinittedShorts'
-import KinittedOrder from './Page/KinittedOrder'
-import MiniDress from './Page/MiniDress'
-import MidaxiDresses from './Page/MidaxiDresses'
-import MaxiDress from './Page/MaxiDress'
-import WideTrouser from './Page/WideTrouser'
-import FlaredTrouser from './Page/FlaredTrouser'
-import LeggingPage from './Page/LeggingPage'
-import StylishCoat from './Page/StylishCoat'
-import LeatherCoat from './Page/LeatherCoat'
 import Profile from './Page/Profile'
 import { getProfile } from './redux/authSlice'
 import { useEffect } from 'react'
@@ -77,27 +61,11 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/about' element={<About />} />
-        <Route path='/newshoes' element={<NewShoes />} />
-        <Route path='/kintwear' element={<KintWear />} />
         <Route path='/carrer' element={<Carrer />} />
         <Route path='/privacypolicy' element={<PrivacyPolicy />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path='/cart' element={<PrivateRoute><Cart /></PrivateRoute>} />
         <Route path='/wishlist' element={<PrivateRoute><Wishlist /></PrivateRoute>} />
-        <Route path='/jumper' element={<Jumpers />} />
-        <Route path='/cardigans' element={<Cardigans />} />
-        <Route path='/kinitteddress' element={<KinittedDress />} />
-        <Route path='/skirt' element={<Skirt />} />
-        <Route path='/short' element={<KinittedShorts />} />
-        <Route path='/kinittedorder' element={<KinittedOrder />} />
-        <Route path='/minidress' element={<MiniDress />} />
-        <Route path='/midaxidress' element={<MidaxiDresses />} />
-        <Route path='/maxidress' element={<MaxiDress />} />
-        <Route path='/widetrouser' element={<WideTrouser />} />
-        <Route path='/flaredtrouser' element={<FlaredTrouser />} />
-        <Route path='/leggingpage' element={<LeggingPage />} />
-        <Route path='/stylishcoat' element={<StylishCoat />} />
-        <Route path='/leathercoat' element={<LeatherCoat />} />
         <Route path='/return' element={<Return />} />
         <Route path='/termoffuse' element={<TermOffUse />} />
         <Route path='/security' element={<Security />} />
