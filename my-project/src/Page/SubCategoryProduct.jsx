@@ -8,13 +8,10 @@ import {
   FaStar,
   FaStarHalfAlt,
   FaShoppingBag,
-  FaEye,
   FaFilter,
   FaThLarge,
   FaThList,
   FaTimes,
-  FaChevronDown,
-  FaChevronUp
 } from "react-icons/fa";
 import { addToCart } from "../redux/cartSlice";
 import ProductImageSlider from "../component/ProductImageSlider";
@@ -656,8 +653,11 @@ const SubCategoryProduct = () => {
                   onMouseEnter={() => setHoveredProductId(product._id)}
                   onMouseLeave={() => setHoveredProductId(null)}
                 >
-                  {/* Product Image Container */}
-                  <div className="relative w-full overflow-hidden bg-gray-100">
+                  {/* Product Image Container - Click to navigate to product detail */}
+                  <div 
+                    className="relative w-full overflow-hidden bg-gray-100 cursor-pointer"
+                    onClick={() => navigate(`/product/${product._id}`)}
+                  >
                     <div className="relative" style={{ paddingBottom: '100%' }}>
                       <div className="absolute inset-0 w-full h-full overflow-hidden">
                         <ProductImageSlider
@@ -681,9 +681,10 @@ const SubCategoryProduct = () => {
                         )}
                       </div>
 
-                      {/* Overlay with Icons */}
+                      {/* Overlay with Icons - Eye icon removed */}
                       <div className="absolute inset-0 bg-gradient-to-l from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                         <div className="absolute right-1.5 top-1/4 -translate-y-1/2 flex flex-col gap-1.5">
+                          {/* Wishlist Button */}
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -698,16 +699,7 @@ const SubCategoryProduct = () => {
                             )}
                           </button>
 
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/product/${product._id}`);
-                            }}
-                            className="w-8 h-8 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transform translate-x-12 group-hover:translate-x-0 transition-all duration-300 hover:bg-[#306D29] hover:scale-105 group-hover:delay-150"
-                          >
-                            <FaEye className="text-gray-700 text-sm hover:text-white transition-colors" />
-                          </button>
-
+                          {/* Add to Cart Button */}
                           <button
                             onClick={(e) => {
                               e.stopPropagation();

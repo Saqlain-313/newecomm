@@ -187,112 +187,121 @@ const ProductDetails = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
 
                         {/* ============ LEFT COLUMN - IMAGE GALLERY ============ */}
-                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-2 lg:p-4">
-                            <div className="relative">
-                                {/* Main Image Slider - Auto Play */}
-                                <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
-                                    <Swiper
-                                        modules={[Autoplay, Pagination, Navigation, EffectFade]}
-                                        effect="fade"
-                                        spaceBetween={0}
-                                        slidesPerView={1}
-                                        autoplay={{
-                                            delay: 3000,
-                                            disableOnInteraction: false,
-                                            pauseOnMouseEnter: true,
-                                        }}
-                                        pagination={{
-                                            clickable: true,
-                                            dynamicBullets: true,
-                                        }}
-                                        navigation={{
-                                            nextEl: '.swiper-button-next-custom',
-                                            prevEl: '.swiper-button-prev-custom',
-                                        }}
-                                        loop={true}
-                                        className="h-[300px] lg:h-[550px]"
-                                    >
-                                        {product?.images?.map((img, index) => (
-                                            <SwiperSlide key={index}>
-                                                <div className="w-full h-full flex items-center justify-center  bg-white ">
-                                                    <img
-                                                        src={img}
-                                                        alt={`${product.name} - ${index + 1}`}
-                                                        className="w-full h-full object-center rounded-md"
-                                                    />
-                                                </div>
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
-
-                                    {/* Custom Navigation Buttons */}
-                                    <button className="swiper-button-prev-custom absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all duration-300">
-                                        <BsArrowLeft className="text-gray-700" />
-                                    </button>
-                                    <button className="swiper-button-next-custom absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all duration-300">
-                                        <BsArrowRight className="text-gray-700" />
-                                    </button>
-
-                                    {/* Badges */}
-                                    <div className="absolute lg:top-4 lg:left-6 top-4 left-4 flex flex-col gap-2 z-10">
-                                        {product.discount > 0 && (
-                                            <span className="px-3 py-1.5 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
-                                                {product.discount}% OFF
-                                            </span>
-                                        )}
-                                        {product.isNew && (
-                                            <span className="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full shadow-lg">
-                                                NEW
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    {/* Wishlist Button */}
-                                    <button
-                                        onClick={handleWishlist}
-                                        className="absolute top-4 right-4 z-10 p-3 bg-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
-                                    >
-                                        {isWishlisted ? (
-                                            <FaHeart className="text-red-500 text-xl" />
-                                        ) : (
-                                            <FaRegHeart className="text-gray-700 text-xl" />
-                                        )}
-                                    </button>
-                                </div>
-
-                                {/* Thumbnail Navigation */}
-                                <div className="mt-4">
-                                    <Swiper
-                                        onSwiper={setThumbsSwiper}
-                                        spaceBetween={10}
-                                        slidesPerView={4}
-                                        freeMode={true}
-                                        watchSlidesProgress={true}
-                                        modules={[FreeMode, Thumbs]}
-                                        className="h-20"
-                                    >
-                                        {product?.images?.map((img, index) => (
-                                            <SwiperSlide key={index}>
-                                                <div className="h-full rounded-xl overflow-hidden cursor-pointer border-2 border-transparent hover:border-[#306D29] transition-all duration-300 bg-white shadow-sm">
-                                                    <img
-                                                        src={img}
-                                                        alt={`Thumbnail ${index + 1}`}
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                </div>
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
-                                </div>
-                            </div>
+                     {/* ============ LEFT COLUMN - IMAGE GALLERY ============ */}
+<div className="bg-gradient-to-br from-gray-50 to-gray-100 p-3 lg:p-5">
+    <div className="relative">
+        {/* Main Image Slider */}
+        <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
+            <Swiper
+                modules={[Autoplay, Pagination, Navigation, EffectFade]}
+                effect="fade"
+                spaceBetween={0}
+                slidesPerView={1}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                }}
+                pagination={{
+                    clickable: true,
+                    dynamicBullets: true,
+                }}
+                navigation={{
+                    nextEl: '.swiper-button-next-custom',
+                    prevEl: '.swiper-button-prev-custom',
+                }}
+                loop={true}
+                className="h-[320px] sm:h-[400px] lg:h-[480px]"
+            >
+                {product?.images?.map((img, index) => (
+                    <SwiperSlide key={index}>
+                        <div className="w-full h-full flex items-center justify-center bg-white">
+                            <img
+                                src={img}
+                                alt={`${product.name} - ${index + 1}`}
+                                className="w-full h-full object-contain p-4"
+                            />
                         </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+
+            {/* Custom Navigation Buttons */}
+            <button className="swiper-button-prev-custom absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all duration-300">
+                <BsArrowLeft className="text-gray-700" />
+            </button>
+            <button className="swiper-button-next-custom absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all duration-300">
+                <BsArrowRight className="text-gray-700" />
+            </button>
+
+            {/* Badges */}
+            <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
+                {product.discount > 0 && (
+                    <span className="px-3 py-1.5 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
+                        {product.discount}% OFF
+                    </span>
+                )}
+                {product.isNew && (
+                    <span className="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full shadow-lg">
+                        NEW
+                    </span>
+                )}
+            </div>
+
+            {/* Wishlist & Share Buttons */}
+            <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
+                <button
+                    onClick={handleWishlist}
+                    className="p-3 bg-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+                >
+                    {isWishlisted ? (
+                        <FaHeart className="text-red-500 text-xl" />
+                    ) : (
+                        <FaRegHeart className="text-gray-700 text-xl" />
+                    )}
+                </button>
+                <button
+                    onClick={() => setShowShare(true)}
+                    className="p-3 bg-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+                >
+                    <IoShareSocialOutline className="text-gray-700 text-xl" />
+                </button>
+            </div>
+        </div>
+
+        {/* Thumbnail Navigation */}
+        <div className="mt-4">
+            <Swiper
+                onSwiper={setThumbsSwiper}
+                spaceBetween={10}
+                slidesPerView={4}
+                freeMode={true}
+                watchSlidesProgress={true}
+                modules={[FreeMode, Thumbs]}
+                className="h-20"
+            >
+                {product?.images?.map((img, index) => (
+                    <SwiperSlide key={index}>
+                        <div className="h-full rounded-xl overflow-hidden cursor-pointer border-2 border-transparent hover:border-[#306D29] transition-all duration-300 bg-white shadow-sm">
+                            <img
+                                src={img}
+                                alt={`Thumbnail ${index + 1}`}
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
+    </div>
+</div>
 
                         {/* ============ RIGHT COLUMN - PRODUCT INFO ============ */}
-                        <div className="p-2 lg:p-10 space-y-2 bg-white">
+                        <div className="p-2 lg:p-6 space-y-2 bg-white">
 
                             {/* Product Name & Rating */}
                             <div className="space-y-2">
-                                <h1 className="text-lg lg:text-2xl font-bold text-gray-800 line-clamp-2 leading-tight">
+                                <h1 className="text-md lg:text-xl font-bold text-gray-800 line-clamp-2 leading-tight">
                                     {product.name}
                                 </h1>
 
@@ -311,7 +320,7 @@ const ProductDetails = () => {
                                     </span>
                                 </div>
 
-                                <p className="text-gray-600 text-sm leading-relaxed">
+                                <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
                                     {product.description}
                                 </p>
                             </div>
@@ -319,7 +328,7 @@ const ProductDetails = () => {
                             {/* Price Section */}
                             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-2 border border-green-100">
                                 <div className="flex items-center gap-4 flex-wrap">
-                                    <span className="text-4xl font-bold text-[#306D29] flex items-center">
+                                    <span className="text-2xl font-bold text-[#306D29] flex items-center">
                                         <FaRupeeSign className="text-2xl mr-1" />
                                         {product.price}
                                     </span>
@@ -341,27 +350,27 @@ const ProductDetails = () => {
                             {/* Size Selection */}
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="font-semibold text-gray-700">Select Size</h3>
-                                    <button className="text-sm text-[#306D29] hover:underline font-medium">Size Guide</button>
+                                    <h3 className="font-semibold text-gray-700 text-sm">Select Size</h3> {/* Added text-sm */}
+                                    <button className="text-xs text-[#306D29] hover:underline font-medium">Size Guide</button> {/* Changed text-sm to text-xs */}
                                 </div>
-                                <div className="flex flex-wrap gap-3">
+                                <div className="flex flex-wrap gap-2"> {/* Changed gap-3 to gap-2 */}
                                     {product?.sizes?.map((size) => (
                                         <button
                                             key={size}
                                             onClick={() => setSelectedSize(size)}
                                             className={`
-                                                relative min-w-[48px] h-12 px-4 rounded-xl border-2 font-semibold text-sm
-                                                flex items-center justify-center
-                                                transition-all duration-300
-                                                ${selectedSize === size
+                    relative min-w-[40px] h-9 px-3 rounded-lg border-2 font-semibold text-xs
+                    flex items-center justify-center
+                    transition-all duration-300
+                    ${selectedSize === size
                                                     ? "bg-[#306D29] text-white border-[#306D29] shadow-lg transform scale-105"
                                                     : "bg-white border-gray-200 hover:border-[#306D29] hover:text-[#306D29]"
                                                 }
-                                            `}
+                `}
                                         >
                                             {size}
                                             {selectedSize === size && (
-                                                <FaCheckCircle className="absolute -top-2 -right-2 text-white bg-[#306D29] rounded-full text-xs" />
+                                                <FaCheckCircle className="absolute -top-1.5 -right-1.5 text-white bg-[#306D29] rounded-full text-[10px]" />
                                             )}
                                         </button>
                                     ))}
@@ -379,7 +388,7 @@ const ProductDetails = () => {
                                         >
                                             <FaMinus className="text-sm" />
                                         </button>
-                                        <span className="px-8 py-3 border-x border-gray-200 font-semibold min-w-[50px] text-center">
+                                        <span className="px-6 py-2 border-x border-gray-200 font-semibold min-w-[50px] text-center">
                                             {quantity}
                                         </span>
                                         <button
@@ -394,33 +403,33 @@ const ProductDetails = () => {
                             </div>
 
                             {/* Action Buttons */}
-                            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                            <div className="flex flex-col sm:flex-row gap-3 pt-2">
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={handleAddToCart}
-                                    className="flex-1 bg-gradient-to-r from-[#306D29] to-[#4CAF50] text-white px-8 py-4 rounded-xl hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 font-semibold text-lg"
+                                    className="flex-1 bg-gradient-to-r from-[#306D29] to-[#4CAF50] text-white px-6 py-3 rounded-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 font-semibold text-sm"
                                 >
-                                    <IoBagAddOutline className="text-2xl" />
+                                    <IoBagAddOutline className="text-xl" />
                                     Add to Cart
                                 </motion.button>
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={handleWishlist}
-                                    className={`px-8 py-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-center gap-3 font-semibold ${isWishlisted
-                                        ? "bg-red-50 border-red-500 text-red-500"
-                                        : "bg-white border-gray-200 hover:border-[#306D29] hover:text-[#306D29]"
+                                    className={`flex-1 px-6 py-3 rounded-lg border-2 transition-all duration-300 flex items-center justify-center gap-2 font-semibold text-sm ${isWishlisted
+                                            ? "bg-red-50 border-red-500 text-red-500"
+                                            : "bg-white border-gray-200 hover:border-[#306D29] hover:text-[#306D29]"
                                         }`}
                                 >
                                     {isWishlisted ? (
                                         <>
-                                            <FaHeart className="text-red-500 text-xl" />
+                                            <FaHeart className="text-red-500 text-base" />
                                             Wishlisted
                                         </>
                                     ) : (
                                         <>
-                                            <FaRegHeart className="text-xl" />
+                                            <FaRegHeart className="text-base" />
                                             Wishlist
                                         </>
                                     )}
@@ -428,7 +437,6 @@ const ProductDetails = () => {
                             </div>
 
                             {/* Delivery & Returns */}
-                            {/* Delivery & Returns - Dynamic from backend */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-gray-50 rounded-2xl p-4">
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 bg-[#306D29]/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -653,7 +661,7 @@ const ProductDetails = () => {
                                     onClick={() => navigate(`/product/${item._id}`)}
                                     className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer"
                                 >
-                                    <div className="relative bg-gray-50  overflow-hidden">
+                                    <div className="relative bg-gray-50 overflow-hidden">
                                         <img
                                             src={item.images?.[0]}
                                             alt={item.name}
