@@ -1,5 +1,6 @@
 import React from 'react'
 import { BannerSlide } from '../store/BannerSlide'
+import { useNavigate } from 'react-router-dom'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -10,6 +11,9 @@ import 'swiper/css/pagination'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 
 const Banner2 = () => {
+
+    const navigate = useNavigate();
+
     return (
         <div className='w-full bg-[#E7E1B1] py-6'>
 
@@ -47,7 +51,14 @@ const Banner2 = () => {
                                             {item.description}
                                         </p> */}
 
-                                        <button className='bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-[#0D530E] hover:text-white transition-all duration-300'>
+                                        <button
+                                            onClick={() =>
+                                                navigate(
+                                                    `/products/subcategory/${item.subCategoryId}?offer=${item.offer}`
+                                                )
+                                            }
+                                            className='bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-[#0D530E] hover:text-white transition-all duration-300'
+                                        >
                                             Shop Now
                                         </button>
 

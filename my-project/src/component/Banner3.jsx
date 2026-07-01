@@ -5,8 +5,10 @@ import image3 from '../assets/images/discount1.jpg';
 import image4 from '../assets/images/discount2.jpg';
 import image5 from '../assets/images/discount3.jpg';
 import image6 from '../assets/images/discount4.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const Banner3 = () => {
+  const navigate = useNavigate();
   const [hoveredId, setHoveredId] = useState(null);
   const [imageErrors, setImageErrors] = useState({});
 
@@ -15,6 +17,8 @@ const Banner3 = () => {
       id: 1,
       image: image2,
       discount: '50% OFF',
+      offer: 50,
+      subCategoryId: "6a323cf0619f54c53b2e7d20",
       title: 'Stylish Jeans',
       subtitle: 'Premium Denim Collection',
       color: 'from-purple-500 to-pink-500',
@@ -24,6 +28,8 @@ const Banner3 = () => {
       id: 2,
       image: image3,
       discount: '30% OFF',
+      offer: 30,
+      subCategoryId: "6a323cf0619f54c53b2e7d20",
       title: 'Summer Collection',
       subtitle: 'Light & Breezy Styles',
       color: 'from-blue-500 to-cyan-500',
@@ -33,6 +39,8 @@ const Banner3 = () => {
       id: 3,
       image: image4,
       discount: '25% OFF',
+      offer: 25,
+      subCategoryId: "6a323cc9619f54c53b2e7d1f",
       title: 'New Arrival',
       subtitle: 'Fresh From The Runway',
       color: 'from-green-500 to-emerald-500',
@@ -42,6 +50,8 @@ const Banner3 = () => {
       id: 4,
       image: image5,
       discount: '40% OFF',
+      offer: 40,
+      subCategoryId: "6a323cb1619f54c53b2e7d1e",
       title: 'Trending Fashion',
       subtitle: 'What\'s Hot Right Now',
       color: 'from-orange-500 to-red-500',
@@ -51,6 +61,8 @@ const Banner3 = () => {
       id: 5,
       image: image6,
       discount: '60% OFF',
+      offer: 60,
+      subCategoryId: "6a323cf0619f54c53b2e7d20",
       title: 'Limited Offer',
       subtitle: 'Hurry, While Stocks Last!',
       color: 'from-red-500 to-rose-600',
@@ -73,7 +85,7 @@ const Banner3 = () => {
   return (
     <section className="bg-[#FBF5DD] py-8 lg:py-12 px-4 lg:px-8 overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Main Banner */}
         <div className="relative group mb-6 lg:mb-8 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500">
           <img
@@ -83,7 +95,7 @@ const Banner3 = () => {
             loading="eager"
             fetchPriority="high"
           />
-          
+
           {/* Main Banner Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent flex items-center">
             <div className="text-white px-6 sm:px-10 lg:px-16 max-w-2xl">
@@ -97,10 +109,16 @@ const Banner3 = () => {
               <p className="text-sm sm:text-base opacity-90 mb-6">
                 Discover the latest trends and upgrade your wardrobe
               </p>
-              <button className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-xl inline-flex items-center gap-2">
+              {/* <button
+                onClick={() =>
+                  navigate(
+                    `/products/subcategory/${item.subCategoryId}?offer=${item.offer}`
+                  )
+                }
+                className="w-[120px] mt-2 bg-gradient-to-r from-[#0D530E] to-[#1a7a1b] text-white text-xs sm:text-sm py-1.5 sm:py-2 rounded-lg"
+              >
                 Shop Now
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -158,9 +176,9 @@ const Banner3 = () => {
                   </div>
 
                   {/* Quick View Button */}
-                  <button className="absolute inset-0 m-auto bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105 w-fit h-fit shadow-lg">
+                  {/* <button className="absolute inset-0 m-auto bg-white/90 backdrop-blur-sm text-gray-800 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-105 w-fit h-fit shadow-lg">
                     Quick View
-                  </button>
+                  </button> */}
 
                   {/* Color Overlay on Hover */}
                   <div className={`absolute inset-0 bg-gradient-to-t ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
@@ -171,18 +189,25 @@ const Banner3 = () => {
                   <h3 className={`text-base sm:text-lg font-bold ${getDiscountColor(item.discount)} transition-colors duration-300`}>
                     {item.discount}
                   </h3>
-                  
+
                   <p className="text-sm sm:text-base font-semibold text-gray-800 group-hover:text-green-600 transition-colors duration-300">
                     {item.title}
                   </p>
-                  
+
                   <p className="text-[10px] sm:text-xs text-gray-500 line-clamp-1">
                     {item.subtitle}
                   </p>
 
                   {/* Add to Cart Button */}
-                  <button className="w-full mt-2 bg-gradient-to-r from-[#0D530E] to-[#1a7a1b] text-white text-xs sm:text-sm py-1.5 sm:py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 hover:shadow-lg hover:brightness-110 transform group-hover:translate-y-0 translate-y-2">
-                    Add to Cart
+                  <button
+                    onClick={() =>
+                      navigate(
+                        `/products/subcategory/${item.subCategoryId}?offer=${item.offer}`
+                      )
+                    }
+                    className="w-full mt-2 bg-gradient-to-r from-[#0D530E] to-[#1a7a1b] text-white text-xs sm:text-sm py-1.5 sm:py-2 rounded-lg"
+                  >
+                    Shop Now
                   </button>
                 </div>
 

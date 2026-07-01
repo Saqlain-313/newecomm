@@ -2,10 +2,12 @@ import React, { useState, useCallback } from 'react';
 import { FiArrowRight, FiShoppingBag, FiHeart } from 'react-icons/fi';
 import image1 from '../assets/images/brand1.jpg';
 import image2 from '../assets/images/brand2.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const Banner = () => {
   const [hoveredBanner, setHoveredBanner] = useState(null);
   const [isLiked, setIsLiked] = useState({});
+  const navigate = useNavigate();
 
   const banners = [
     {
@@ -14,6 +16,8 @@ const Banner = () => {
       title: 'Summer Collection',
       subtitle: 'Light & Breezy Styles',
       discount: 'Up to 40% Off',
+      offer: 40,
+      subCategoryId: "6a32386b619f54c53b2e7d02",
       brand: 'ZARA',
       color: 'from-yellow-400 to-orange-500',
       buttonColor: 'bg-gradient-to-r from-[#d5c865] to-[#c4b855]'
@@ -24,6 +28,8 @@ const Banner = () => {
       title: 'Premium Essentials',
       subtitle: 'Timeless Fashion Pieces',
       discount: 'New Arrivals',
+      offer: 0,
+      subCategoryId: "6a323970619f54c53b2e7d09",
       brand: 'H&M',
       color: 'from-blue-400 to-purple-500',
       buttonColor: 'bg-gradient-to-r from-[#d5c865] to-[#c4b855]'
@@ -41,7 +47,7 @@ const Banner = () => {
   return (
     <section className="bg-gradient-to-b from-[#FBF5DD] to-[#f5f0d6] py-4 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        
+
         {/* Brand Header */}
         <div className="flex items-center gap-4 mb-8 md:mb-6">
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#0D530E] to-transparent"></div>
@@ -90,10 +96,9 @@ const Banner = () => {
                   onClick={(e) => handleLike(banner.id, e)}
                   className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
                 >
-                  <FiHeart 
-                    className={`w-5 h-5 transition-colors ${
-                      isLiked[banner.id] ? 'text-red-500 fill-red-500' : 'text-gray-700'
-                    }`}
+                  <FiHeart
+                    className={`w-5 h-5 transition-colors ${isLiked[banner.id] ? 'text-red-500 fill-red-500' : 'text-gray-700'
+                      }`}
                   />
                 </button>
 
@@ -113,7 +118,18 @@ const Banner = () => {
                     </p>
 
                     {/* Shop Now Button */}
-                    <button className="group/btn inline-flex items-center gap-2 bg-[#d5c865] hover:bg-[#c4b855] text-gray-800 font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                    <button
+                      onClick={() => {
+                        if (banner.offer > 0) {
+                          navigate(
+                            `/products/subcategory/${banner.subCategoryId}?offer=${banner.offer}`
+                          );
+                        } else {
+                          navigate(`/products/subcategory/${banner.subCategoryId}`);
+                        }
+                      }}
+                      className="group/btn inline-flex items-center gap-2 bg-[#d5c865] hover:bg-[#c4b855] text-gray-800 font-semibold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                    >
                       <FiShoppingBag className="w-4 h-4" />
                       <span>Shop Now</span>
                       <FiArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />

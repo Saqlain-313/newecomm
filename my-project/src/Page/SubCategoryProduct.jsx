@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsBySubCategory } from "../redux/productSlice";
-import { 
-  FaHeart, 
-  FaRegHeart, 
-  FaStar, 
-  FaStarHalfAlt, 
-  FaShoppingBag, 
+import {
+  FaHeart,
+  FaRegHeart,
+  FaStar,
+  FaStarHalfAlt,
+  FaShoppingBag,
   FaEye,
-  FaFilter, 
-  FaThLarge, 
+  FaFilter,
+  FaThLarge,
   FaThList,
   FaTimes,
   FaChevronDown,
@@ -26,6 +26,9 @@ import {
 
 const SubCategoryProduct = () => {
   const { id } = useParams();
+  const location = useLocation();
+
+  const offer = new URLSearchParams(location.search).get("offer");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [viewMode, setViewMode] = useState("grid");
@@ -89,24 +92,29 @@ const SubCategoryProduct = () => {
   // Filter and Sort Products
   const filteredProducts = useMemo(() => {
     let filtered = [...products];
+    if (offer === "70") {
+  filtered = filtered.filter(
+    (product) => Number(product.discount) >= 70
+  );
+}
 
     // Price filter
-    filtered = filtered.filter(product => 
-      product.price >= filters.priceRange[0] && 
+    filtered = filtered.filter(product =>
+      product.price >= filters.priceRange[0] &&
       product.price <= filters.priceRange[1]
     );
 
     // Brand filter
     if (filters.selectedBrands.length > 0) {
-      filtered = filtered.filter(product => 
+      filtered = filtered.filter(product =>
         filters.selectedBrands.includes(product.brand)
       );
     }
 
     // Size filter
     if (filters.selectedSizes.length > 0) {
-      filtered = filtered.filter(product => 
-        product.sizes && product.sizes.some(size => 
+      filtered = filtered.filter(product =>
+        product.sizes && product.sizes.some(size =>
           filters.selectedSizes.includes(size)
         )
       );
@@ -114,7 +122,7 @@ const SubCategoryProduct = () => {
 
     // Rating filter
     if (filters.selectedRating) {
-      filtered = filtered.filter(product => 
+      filtered = filtered.filter(product =>
         (product.rating || 0) >= filters.selectedRating
       );
     }
@@ -263,11 +271,11 @@ const SubCategoryProduct = () => {
   // Fixed renderStars function
   const renderStars = (rating) => {
     const validRating = Math.max(0, Math.min(5, Number(rating) || 0));
-    
+
     const fullStars = Math.floor(validRating);
     const hasHalfStar = validRating % 1 >= 0.5;
     const emptyStars = Math.max(0, 5 - fullStars - (hasHalfStar ? 1 : 0));
-    
+
     return (
       <>
         {[...Array(fullStars)].map((_, i) => (
@@ -305,57 +313,53 @@ const SubCategoryProduct = () => {
         {/* Toast Notification */}
         {toast && (
           <div className="fixed top-4 right-4 z-50 w-80 animate-slideInRight">
-            <div className={`relative p-3 rounded-xl shadow-2xl backdrop-blur-md border ${
-              toast.type === "success" 
-                ? "bg-green-50 border-green-500" 
-                : toast.type === "error" 
-                ? "bg-red-50 border-red-500"
-                : toast.type === "info"
-                ? "bg-blue-50 border-blue-500"
-                : "bg-gray-50 border-gray-500"
-            }`}>
-              <button 
+            <div className={`relative p-3 rounded-xl shadow-2xl backdrop-blur-md border ${toast.type === "success"
+                ? "bg-green-50 border-green-500"
+                : toast.type === "error"
+                  ? "bg-red-50 border-red-500"
+                  : toast.type === "info"
+                    ? "bg-blue-50 border-blue-500"
+                    : "bg-gray-50 border-gray-500"
+              }`}>
+              <button
                 onClick={() => setToast(null)}
                 className="absolute top-1 right-1 text-gray-400 hover:text-gray-600 transition-colors text-sm"
               >
                 <FaTimes />
               </button>
               <div className="flex items-start gap-2 pr-5">
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm ${
-                  toast.type === "success" 
-                    ? "bg-green-100" 
-                    : toast.type === "error" 
-                    ? "bg-red-100"
-                    : toast.type === "info"
-                    ? "bg-blue-100"
-                    : "bg-gray-100"
-                }`}>
+                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm ${toast.type === "success"
+                    ? "bg-green-100"
+                    : toast.type === "error"
+                      ? "bg-red-100"
+                      : toast.type === "info"
+                        ? "bg-blue-100"
+                        : "bg-gray-100"
+                  }`}>
                   {toast.type === "success" && "✅"}
                   {toast.type === "error" && "❌"}
                   {toast.type === "info" && "ℹ️"}
                 </div>
                 <div className="flex-1">
-                  <p className={`text-sm font-medium ${
-                    toast.type === "success" 
-                      ? "text-green-800" 
-                      : toast.type === "error" 
-                      ? "text-red-800"
-                      : toast.type === "info"
-                      ? "text-blue-800"
-                      : "text-gray-800"
-                  }`}>
+                  <p className={`text-sm font-medium ${toast.type === "success"
+                      ? "text-green-800"
+                      : toast.type === "error"
+                        ? "text-red-800"
+                        : toast.type === "info"
+                          ? "text-blue-800"
+                          : "text-gray-800"
+                    }`}>
                     {toast.message}
                   </p>
                   <div className="mt-1 w-full bg-gray-200 rounded-full h-0.5 overflow-hidden">
-                    <div className={`h-full rounded-full animate-progress ${
-                      toast.type === "success" 
-                        ? "bg-green-500" 
-                        : toast.type === "error" 
-                        ? "bg-red-500"
-                        : toast.type === "info"
-                        ? "bg-blue-500"
-                        : "bg-gray-500"
-                    }`}></div>
+                    <div className={`h-full rounded-full animate-progress ${toast.type === "success"
+                        ? "bg-green-500"
+                        : toast.type === "error"
+                          ? "bg-red-500"
+                          : toast.type === "info"
+                            ? "bg-blue-500"
+                            : "bg-gray-500"
+                      }`}></div>
                   </div>
                 </div>
               </div>
@@ -379,7 +383,7 @@ const SubCategoryProduct = () => {
                   Discover handpicked products crafted with excellence
                 </p>
               </div>
-              
+
               <div className="flex flex-wrap gap-3">
                 <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 text-center border border-white/30">
                   <p className="text-xl font-bold text-white">{filteredProducts.length}</p>
@@ -394,7 +398,7 @@ const SubCategoryProduct = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
         </div>
@@ -414,25 +418,23 @@ const SubCategoryProduct = () => {
                 </span>
               )}
             </button>
-            
+
             <div className="flex items-center gap-0.5 bg-white rounded-lg shadow-md p-0.5">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-1.5 rounded-lg transition-all duration-300 ${
-                  viewMode === "grid" 
-                    ? "bg-[#306D29] text-white shadow-md" 
+                className={`p-1.5 rounded-lg transition-all duration-300 ${viewMode === "grid"
+                    ? "bg-[#306D29] text-white shadow-md"
                     : "text-gray-500 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 <FaThLarge className="text-xs" />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-1.5 rounded-lg transition-all duration-300 ${
-                  viewMode === "list" 
-                    ? "bg-[#306D29] text-white shadow-md" 
+                className={`p-1.5 rounded-lg transition-all duration-300 ${viewMode === "list"
+                    ? "bg-[#306D29] text-white shadow-md"
                     : "text-gray-500 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 <FaThList className="text-xs" />
               </button>
@@ -440,7 +442,7 @@ const SubCategoryProduct = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <select 
+            <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="px-3 py-2 bg-white rounded-lg shadow-md text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-[#306D29]"
@@ -461,14 +463,14 @@ const SubCategoryProduct = () => {
               {/* Price Filter */}
               <div>
                 <h4 className="font-semibold text-gray-700 text-sm mb-2">Price Range</h4>
-                <input 
-                  type="range" 
-                  min="0" 
-                  max="5000" 
+                <input
+                  type="range"
+                  min="0"
+                  max="5000"
                   step="100"
                   value={filters.priceRange[1]}
                   onChange={handlePriceChange}
-                  className="w-full accent-[#306D29] h-1" 
+                  className="w-full accent-[#306D29] h-1"
                 />
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>₹{filters.priceRange[0]}</span>
@@ -483,12 +485,12 @@ const SubCategoryProduct = () => {
                   <div className="space-y-1 max-h-32 overflow-y-auto">
                     {availableBrands.map(brand => (
                       <label key={brand} className="flex items-center gap-1.5 text-xs cursor-pointer hover:text-[#306D29] transition-colors">
-                        <input 
-                          type="checkbox" 
+                        <input
+                          type="checkbox"
                           checked={filters.selectedBrands.includes(brand)}
                           onChange={() => handleBrandToggle(brand)}
-                          className="accent-[#306D29] w-3 h-3" 
-                        /> 
+                          className="accent-[#306D29] w-3 h-3"
+                        />
                         {brand}
                       </label>
                     ))}
@@ -502,14 +504,13 @@ const SubCategoryProduct = () => {
                   <h4 className="font-semibold text-gray-700 text-sm mb-2">Size</h4>
                   <div className="flex flex-wrap gap-1">
                     {availableSizes.map(size => (
-                      <button 
-                        key={size} 
+                      <button
+                        key={size}
                         onClick={() => handleSizeToggle(size)}
-                        className={`px-2.5 py-1 border rounded-lg text-xs transition-all duration-300 ${
-                          filters.selectedSizes.includes(size)
+                        className={`px-2.5 py-1 border rounded-lg text-xs transition-all duration-300 ${filters.selectedSizes.includes(size)
                             ? "bg-[#306D29] text-white border-[#306D29]"
                             : "hover:bg-[#306D29] hover:text-white"
-                        }`}
+                          }`}
                       >
                         {size}
                       </button>
@@ -524,12 +525,12 @@ const SubCategoryProduct = () => {
                 <div className="space-y-1">
                   {[4, 3, 2, 1].map(rating => (
                     <label key={rating} className="flex items-center gap-1.5 text-xs cursor-pointer hover:text-[#306D29] transition-colors">
-                      <input 
-                        type="radio" 
+                      <input
+                        type="radio"
                         name="rating"
                         checked={filters.selectedRating === rating}
                         onChange={() => handleRatingSelect(rating)}
-                        className="accent-[#306D29] w-3 h-3" 
+                        className="accent-[#306D29] w-3 h-3"
                       />
                       <span className="flex items-center gap-0.5">
                         {renderStars(rating)} & Up
@@ -543,20 +544,20 @@ const SubCategoryProduct = () => {
             {/* Additional Filters */}
             <div className="flex flex-wrap gap-4 mt-4 pt-4 border-t border-gray-100">
               <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={filters.inStock}
                   onChange={(e) => setFilters(prev => ({ ...prev, inStock: e.target.checked }))}
-                  className="accent-[#306D29] w-4 h-4" 
+                  className="accent-[#306D29] w-4 h-4"
                 />
                 In Stock Only
               </label>
               <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={filters.onSale}
                   onChange={(e) => setFilters(prev => ({ ...prev, onSale: e.target.checked }))}
-                  className="accent-[#306D29] w-4 h-4" 
+                  className="accent-[#306D29] w-4 h-4"
                 />
                 On Sale
               </label>
@@ -564,13 +565,13 @@ const SubCategoryProduct = () => {
 
             {/* Filter Actions */}
             <div className="flex flex-wrap justify-end gap-2 mt-4 pt-4 border-t border-gray-100">
-              <button 
+              <button
                 onClick={clearAllFilters}
                 className="px-4 py-1.5 border rounded-lg text-sm hover:bg-gray-50 transition-all duration-300"
               >
                 Clear All
               </button>
-              <button 
+              <button
                 onClick={() => setShowFilters(false)}
                 className="px-4 py-1.5 bg-[#306D29] text-white rounded-lg text-sm hover:bg-[#255420] transition-all duration-300"
               >
@@ -659,13 +660,13 @@ const SubCategoryProduct = () => {
                   <div className="relative w-full overflow-hidden bg-gray-100">
                     <div className="relative" style={{ paddingBottom: '100%' }}>
                       <div className="absolute inset-0 w-full h-full overflow-hidden">
-                        <ProductImageSlider 
-                          product={product} 
+                        <ProductImageSlider
+                          product={product}
                           navigate={navigate}
                           isHovered={hoveredProductId === product._id}
                         />
                       </div>
-                      
+
                       {/* Badges */}
                       <div className="absolute top-1.5 left-1.5 z-20 flex items-center gap-1">
                         {product.discount > 0 && (
@@ -697,7 +698,7 @@ const SubCategoryProduct = () => {
                             )}
                           </button>
 
-                          <button 
+                          <button
                             onClick={(e) => {
                               e.stopPropagation();
                               navigate(`/product/${product._id}`);
@@ -707,7 +708,7 @@ const SubCategoryProduct = () => {
                             <FaEye className="text-gray-700 text-sm hover:text-white transition-colors" />
                           </button>
 
-                          <button 
+                          <button
                             onClick={(e) => {
                               e.stopPropagation();
                               handleAddToCart(product, selectedSize[product._id]);
@@ -760,12 +761,11 @@ const SubCategoryProduct = () => {
                         {product.sizes.slice(0, 5).map((size) => (
                           <button
                             key={size}
-                            onClick={() => setSelectedSize({...selectedSize, [product._id]: size})}
-                            className={`px-2 py-0.5 text-[9px] rounded-full border transition-all duration-300 ${
-                              selectedSize[product._id] === size
+                            onClick={() => setSelectedSize({ ...selectedSize, [product._id]: size })}
+                            className={`px-2 py-0.5 text-[9px] rounded-full border transition-all duration-300 ${selectedSize[product._id] === size
                                 ? "bg-[#306D29] text-white border-[#306D29]"
                                 : "border-gray-300 hover:border-[#306D29] hover:text-[#306D29]"
-                            }`}
+                              }`}
                           >
                             {size}
                           </button>
@@ -792,7 +792,7 @@ const SubCategoryProduct = () => {
                 <div className="text-4xl mb-2">🛍️</div>
                 <h2 className="text-xl font-semibold text-gray-700">No Products Found</h2>
                 <p className="text-sm text-gray-500 mt-1">Try adjusting your filters</p>
-                <button 
+                <button
                   onClick={clearAllFilters}
                   className="mt-4 px-4 py-2 bg-[#306D29] text-white rounded-lg hover:bg-[#255420] transition-all duration-300"
                 >
